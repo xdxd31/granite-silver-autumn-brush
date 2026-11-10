@@ -3,15 +3,16 @@
 export const MAP_SIZE = 2000
 
 export type Pt = { x: number; y: number }
+export type PortalPt = Pt & { gameX: number; gameY: number }
 
 export type Portal = {
   id: number
-  from: Pt
-  to: Pt
+  from: PortalPt
+  to: PortalPt
 }
 
-function pt(x: number, y: number): Pt {
-  return { x: 182.423 + 0.106422 * x, y: 111.896 + 0.106554 * y }
+function pt(x: number, y: number): PortalPt {
+  return { x: 182.423 + 0.106422 * x, y: 111.896 + 0.106554 * y, gameX: x, gameY: y }
 }
 
 export const PORTALS: readonly Portal[] = [

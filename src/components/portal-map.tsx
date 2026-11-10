@@ -326,15 +326,8 @@ export function PortalMap() {
     if (g.kind === "pan" && g.id === e.pointerId && !g.moved) {
       const v = viewRef.current;
       const hit = v ? pick(e.clientX, e.clientY, HIT) : null;
-      const touch = g.pointerType !== "mouse";
-      if (touch && v && v.s < 0.9) {
-        zoomAt(e.clientX, e.clientY, Math.max(2.4, 1 / v.s), true);
-      } else if (hit) {
+      if (hit) {
         setPinnedId((cur) => (cur === hit.id ? null : hit.id));
-      } else if (!touch) {
-        setPinnedId(null);
-      } else if (v && v.s < 4) {
-        zoomAt(e.clientX, e.clientY, 2, true);
       } else {
         setPinnedId(null);
       }
@@ -519,7 +512,7 @@ function Balloon({
 }) {
   const o = bubbleOffset(portal, other);
   const digits = String(id).length;
-  const w = digits >= 3 ? 100 : digits === 2 ? 88 : 76;
+  const w = digits >= 3 ? 108 : digits === 2 ? 100 : 92;
   const h = 42;
   const absx = w / 2 - 1;
   const absy = h / 2 - 1;
@@ -545,11 +538,11 @@ function Balloon({
         points={`${ex + nx * spread},${ey + ny * spread} 0,0 ${ex - nx * spread},${ey - ny * spread}`}
       />
       <rect x={o.x - w / 2} y={o.y - h / 2} width={w} height={h} rx={14} strokeWidth={2.6} />
-      <text className="bubble-num" x={o.x} y={o.y - 6} fontSize={20} textAnchor="middle" dominantBaseline="middle">
+      <text className="bubble-num" x={o.x} y={o.y - 7} fontSize={20} textAnchor="middle" dominantBaseline="middle">
         {id}
       </text>
-      <text className="bubble-kicker" x={o.x} y={o.y + 12} fontSize={9} textAnchor="middle" dominantBaseline="middle">
-        X {portal.gameX}  Y {portal.gameY}
+      <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={8} textAnchor="middle" dominantBaseline="middle">
+        X:{portal.gameX} Y:{portal.gameY}
       </text>
     </g>
   );

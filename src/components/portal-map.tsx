@@ -511,7 +511,7 @@ function Balloon({
   kind,
   bubbleScale,
 }: {
-  portal: Pt;
+  portal: Portal["from"];
   other: Pt;
   id: number;
   kind: "in" | "out";
@@ -519,8 +519,8 @@ function Balloon({
 }) {
   const o = bubbleOffset(portal, other);
   const digits = String(id).length;
-  const w = digits >= 3 ? 88 : digits === 2 ? 76 : 64;
-  const h = 50;
+  const w = digits >= 3 ? 100 : digits === 2 ? 88 : 76;
+  const h = 42;
   const absx = w / 2 - 1;
   const absy = h / 2 - 1;
   const pdx = -o.x;
@@ -545,11 +545,11 @@ function Balloon({
         points={`${ex + nx * spread},${ey + ny * spread} 0,0 ${ex - nx * spread},${ey - ny * spread}`}
       />
       <rect x={o.x - w / 2} y={o.y - h / 2} width={w} height={h} rx={14} strokeWidth={2.6} />
-      <text className="bubble-kicker" x={o.x} y={o.y - 10} fontSize={12} textAnchor="middle" dominantBaseline="middle">
-        {kind === "in" ? "入口" : "出口"}
-      </text>
-      <text className="bubble-num" x={o.x} y={o.y + 11} fontSize={22} textAnchor="middle" dominantBaseline="middle">
+      <text className="bubble-num" x={o.x} y={o.y - 6} fontSize={20} textAnchor="middle" dominantBaseline="middle">
         {id}
+      </text>
+      <text className="bubble-kicker" x={o.x} y={o.y + 12} fontSize={9} textAnchor="middle" dominantBaseline="middle">
+        X {portal.gameX}  Y {portal.gameY}
       </text>
     </g>
   );

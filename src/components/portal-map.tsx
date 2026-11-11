@@ -130,6 +130,7 @@ export function PortalMap() {
   const [panning, setPanning] = useState(false);
   const [hoverId, setHoverId] = useState<number | null>(null);
   const [pinnedId, setPinnedId] = useState<number | null>(null);
+  const [cueMessage, setCueMessage] = useState<number | null>(null);
   const viewRef = useRef<View | null>(null);
   const userMoved = useRef(false);
   const animOn = useRef(false);
@@ -139,6 +140,23 @@ export function PortalMap() {
   const animTimer = useRef(0);
 
   viewRef.current = view;
+
+  useEffect(() => {
+    setCueMessage(Math.floor(Math.random() * 4));
+    let timer = 0;
+    const scheduleNextMessage = () => {
+      timer = window.setTimeout(() => {
+        setCueMessage((current) => {
+          const previous = current ?? 0;
+          const next = Math.floor(Math.random() * 3);
+          return next >= previous ? next + 1 : next;
+        });
+        scheduleNextMessage();
+      }, 20_000 + Math.random() * 20_000);
+    };
+    scheduleNextMessage();
+    return () => window.clearTimeout(timer);
+  }, []);
 
   function setAnimated(on: boolean) {
     if (animOn.current === on) return;
@@ -438,10 +456,10 @@ export function PortalMap() {
         >
           <span className="explore-cue__acorn">🌰</span>
           <span className="explore-cue__copy">
-            <strong>マップを探索</strong>
-            <span>ドラッグで移動</span>
-            <span>スクロール / ピンチで拡大</span>
-            <span>ポータルをタップ / ホバー</span>
+            <strong data-active={cueMessage === 0}>マップを探索</strong>
+            <span data-active={cueMessage === 1}>ドラッグで移動</span>
+            <span data-active={cueMessage === 2}>スクロール / ピンチで拡大</span>
+            <span data-active={cueMessage === 3}>ポータルをタップ / ホバー</span>
           </span>
         </aside>
         <p className="sr-only" aria-live="polite">

@@ -93,6 +93,45 @@
 .world svg {
   overflow: visible;
 }
+.title-sweep {
+  position: absolute;
+  z-index: 1;
+  top: 2%;
+  left: 7.5%;
+  width: 53%;
+  height: 13.5%;
+  overflow: hidden;
+  pointer-events: none;
+  clip-path: polygon(0 18%, 8% 12%, 15% 19%, 24% 6%, 29% 24%, 38% 5%, 47% 13%, 53% 0, 62% 11%, 68% 7%, 76% 17%, 85% 11%, 91% 18%, 96% 12%, 100% 26%, 96% 47%, 91% 62%, 75% 65%, 62% 76%, 44% 78%, 35% 91%, 20% 100%, 17% 86%, 8% 82%, 0 62%);
+}
+
+.title-sweep::before {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -28%;
+  width: 22%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgb(255 255 255 / 12%) 28%,
+    rgb(255 248 220 / 62%) 50%,
+    rgb(255 255 255 / 14%) 72%,
+    transparent
+  );
+  content: "";
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  animation: title-light-sweep 8s cubic-bezier(0.3, 0.7, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes title-light-sweep {
+  0% { transform: translateX(0); }
+  13% { transform: translateX(600%); }
+  100% { transform: translateX(600%); }
+}
+
 
 .bubble-kicker,
 .bubble-num {
@@ -142,5 +181,9 @@
 
   .motion {
     display: none;
+  }
+
+  .title-sweep::before {
+    animation: none;
   }
 }

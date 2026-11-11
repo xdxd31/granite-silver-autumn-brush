@@ -7,6 +7,10 @@ const EXPLORE_CUE_MAP_POSITION = {
   x: 182.423 + 0.106422 * 1000,
   y: 111.896 + 0.106554 * 15000,
 };
+const LABEL_TOGGLE_MAP_POSITION = {
+  x: 182.423 + 0.106422 * 15000,
+  y: 111.896 + 0.106554 * 1000,
+};
 
 type View = { x: number; y: number; s: number };
 
@@ -132,6 +136,7 @@ export function PortalMap() {
   const [pinnedId, setPinnedId] = useState<number | null>(null);
   const [cueMessage, setCueMessage] = useState<number | null>(null);
   const [mapModified, setMapModified] = useState(false);
+  const [labelsHidden, setLabelsHidden] = useState(false);
   const viewRef = useRef<View | null>(null);
   const userMoved = useRef(false);
   const animOn = useRef(false);
@@ -141,33 +146,6 @@ export function PortalMap() {
   const animTimer = useRef(0);
 
   viewRef.current = view;
-
-  useEffect(() => {
-    let firstMessageTimer = 0;
-    let visibleTimer = 0;
-    let nextMessageTimer = 0;
-    const scheduleRandomMessage = (delay: number) => {
-      nextMessageTimer = window.setTimeout(() => {
-        setCueMessage(1 + Math.floor(Math.random() * 3));
-        visibleTimer = window.setTimeout(() => {
-          setCueMessage(null);
-          scheduleRandomMessage(15_000);
-        }, 5_000);
-      }, delay);
-    };
-    firstMessageTimer = window.setTimeout(() => {
-      setCueMessage(0);
-      visibleTimer = window.setTimeout(() => {
-        setCueMessage(null);
-        scheduleRandomMessage(20_000);
-      }, 5_000);
-    }, 3_000);
-    return () => {
-      window.clearTimeout(firstMessageTimer);
-      window.clearTimeout(visibleTimer);
-      window.clearTimeout(nextMessageTimer);
-    };
-  }, []);
 
   function setAnimated(on: boolean) {
     if (animOn.current === on) return;
@@ -217,6 +195,7 @@ export function PortalMap() {
   }
 
   function pick(clientX: number, clientY: number, maxDist: number) {
+    if (labelsHidden) return null;
     const p = clientToMap(clientX, clientY);
     let best: { id: number; dist: number } | null = null;
     for (const e of PORTAL_ENDS) {
@@ -267,6 +246,33 @@ export function PortalMap() {
     return () => el.removeEventListener("wheel", onWheel);
     // zoomAt reads refs; rebinding every render would drop the listener mid-gesture.
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    let firstMessageTimer = 0;
+    let visibleTimer = 0;
+    let nextMessageTimer = 0;
+    const scheduleRandomMessage = (delay: number) => {
+      nextMessageTimer = window.setTimeout(() => {
+        setCueMessage(1 + Math.floor(Math.random() * 3));
+        visibleTimer = window.setTimeout(() => {
+          setCueMessage(null);
+          scheduleRandomMessage(15_000);
+        }, 5_000);
+      }, delay);
+    };
+    firstMessageTimer = window.setTimeout(() => {
+      setCueMessage(0);
+      visibleTimer = window.setTimeout(() => {
+        setCueMessage(null);
+        scheduleRandomMessage(20_000);
+      }, 5_000);
+    }, 3_000);
+    return () => {
+      window.clearTimeout(firstMessageTimer);
+      window.clearTimeout(visibleTimer);
+      window.clearTimeout(nextMessageTimer);
+    };
   }, []);
 
   function onPointerDown(e: ReactPointerEvent<HTMLDivElement>) {
@@ -429,7 +435,11 @@ export function PortalMap() {
               : undefined
           }
         >
-          <img src="/map.png" alt="どんぐリアドベンチャーのマップ" draggable={false} />
+          <img
+            src={labelsHidden ? "/map0.png" : "/map.png"}
+            alt="どんぐリアドベンチャーのマップ"
+            draggable={false}
+          />
           <svg viewBox={`0 0 ${MAP_SIZE} ${MAP_SIZE}`} aria-hidden="true">
             <defs>
               <filter id="warp-glow" x="-30%" y="-30%" width="160%" height="160%">
@@ -438,7 +448,7 @@ export function PortalMap() {
               <filter id="bubble-shadow" x="-40%" y="-40%" width="180%" height="180%">
                 <feDropShadow dx="0" dy={2 / s} stdDeviation={2.4 / s} floodColor="#041018" floodOpacity="0.55" />
               </filter>
-              {active ? (
+              {active && !labelsHidden ? (
                 <linearGradient
                   id="warp"
                   gradientUnits="userSpaceOnUse"
@@ -453,30 +463,60 @@ export function PortalMap() {
                 </linearGradient>
               ) : null}
             </defs>
-            {active ? <Warp portal={active} scale={s} /> : null}
+            {active && !labelsHidden ? <Warp portal={active} scale={s} /> : null}
           </svg>
         </div>
-        <aside
-          className="explore-cue"
+        <button
+          type="button"
+          className="map-label-toggle"
+          role="switch"
+          aria-checked={labelsHidden}
+          aria-label="マップのラベル無し"
+          data-on={labelsHidden}
           data-map-modified={mapModified}
-          aria-hidden="true"
           style={
             view
               ? ({
-                  "--explore-cue-left": `${view.x + view.s * EXPLORE_CUE_MAP_POSITION.x}px`,
-                  "--explore-cue-top": `${view.y + view.s * EXPLORE_CUE_MAP_POSITION.y}px`,
+                  "--map-label-toggle-left": `${view.x + view.s * LABEL_TOGGLE_MAP_POSITION.x}px`,
+                  "--map-label-toggle-top": `${view.y + view.s * LABEL_TOGGLE_MAP_POSITION.y}px`,
                 } as CSSProperties)
               : undefined
           }
+          onPointerDown={(e) => e.stopPropagation()}
+          onPointerMove={(e) => e.stopPropagation()}
+          onClick={() => {
+            setLabelsHidden((current) => !current);
+            setPinnedId(null);
+            setHover(null);
+          }}
         >
-          <span className="explore-cue__acorn">🌰</span>
-          <span className="explore-cue__copy">
-            <strong data-active={cueMessage === 0}>マップを探索</strong>
-            <span data-active={cueMessage === 1}>ドラッグで移動</span>
-            <span data-active={cueMessage === 2}>スクロール / ピンチで拡大</span>
-            <span data-active={cueMessage === 3}>ポータルをタップ / ホバー</span>
+          <span>マップのラベル無し</span>
+          <span className="map-label-toggle__track" aria-hidden="true">
+            <span className="map-label-toggle__thumb" />
           </span>
-        </aside>
+        </button>
+        {!labelsHidden ? (
+          <aside
+            className="explore-cue"
+            data-map-modified={mapModified}
+            style={
+              view
+                ? ({
+                    "--explore-cue-left": `${view.x + view.s * EXPLORE_CUE_MAP_POSITION.x}px`,
+                    "--explore-cue-top": `${view.y + view.s * EXPLORE_CUE_MAP_POSITION.y}px`,
+                  } as CSSProperties)
+                : undefined
+            }
+          >
+            <span className="explore-cue__acorn" aria-hidden="true">🌰</span>
+            <span className="explore-cue__copy">
+              <strong data-active={cueMessage === 0}>マップを探索</strong>
+              <span data-active={cueMessage === 1}>ドラッグで移動</span>
+              <span data-active={cueMessage === 2}>スクロール / ピンチで拡大</span>
+              <span data-active={cueMessage === 3}>ポータルをタップ / ホバー</span>
+            </span>
+          </aside>
+        ) : null}
         <p className="sr-only" aria-live="polite">
           {active ? `ポータル ${active.id}。入口から出口へつながっています。` : ""}
         </p>

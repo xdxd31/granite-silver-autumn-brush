@@ -473,7 +473,7 @@ export function PortalMap() {
           aria-checked={labelsHidden}
           aria-label="マップのラベル無し"
           data-on={labelsHidden}
-          data-map-modified={mapModified}
+          data-map-modified={mapModified || panning}
           style={
             view
               ? ({
@@ -498,7 +498,7 @@ export function PortalMap() {
         {!labelsHidden ? (
           <aside
             className="explore-cue"
-            data-map-modified={mapModified}
+            data-map-modified={mapModified || panning}
             style={
               view
                 ? ({

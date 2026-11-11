@@ -123,8 +123,9 @@
 
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .explore-cue {
-    top: auto;
     right: auto;
+    left: var(--explore-cue-left, 50%);
+    top: var(--explore-cue-top, 50%);
     width: max-content;
     padding: 0;
     border: 0;

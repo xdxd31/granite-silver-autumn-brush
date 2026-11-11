@@ -505,6 +505,13 @@ export function PortalMap() {
                 ? ({
                     "--explore-cue-left": `${view.x + view.s * EXPLORE_CUE_MAP_POSITION.x}px`,
                     "--explore-cue-top": `${view.y + view.s * EXPLORE_CUE_MAP_POSITION.y}px`,
+                    "--explore-cue-scale": vpRef.current
+                      ? view.s /
+                        fitView(
+                          vpRef.current.getBoundingClientRect().width,
+                          vpRef.current.getBoundingClientRect().height,
+                        ).s
+                      : 1,
                   } as CSSProperties)
                 : undefined
             }

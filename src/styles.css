@@ -271,10 +271,10 @@
   }
 
   .map-label-toggle {
-    top: var(--map-label-toggle-top, 12px);
-    right: 12px;
-    left: auto;
-    transform: none;
+    top: var(--map-label-toggle-mobile-top, 12px);
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
     transition: opacity 220ms ease;
   }
 

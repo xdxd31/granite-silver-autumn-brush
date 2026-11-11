@@ -434,7 +434,7 @@ function Warp({ portal, scale }: { portal: Portal; scale: number }) {
   const sw = 4.55 / scale;
   const dash = 22 / scale;
   const gap = 78 / scale;
-  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.588;
+  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.6468;
 
   return (
     <g key={portal.id}>
@@ -539,7 +539,7 @@ function Balloon({
       />
       <rect x={o.x - w / 2} y={o.y - h / 2} width={w} height={h} rx={14} strokeWidth={2.6} />
       <text className="bubble-num" x={o.x} y={o.y - 7} fontSize={12} textAnchor="middle" dominantBaseline="middle">
-        {id}
+        #{id}
       </text>
       <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={10} textAnchor="middle" dominantBaseline="middle">
         X:{portal.gameX} Y:{portal.gameY}

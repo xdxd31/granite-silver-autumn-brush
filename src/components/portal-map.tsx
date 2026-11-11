@@ -7,6 +7,10 @@ const EXPLORE_CUE_MAP_POSITION = {
   x: 182.423 + 0.106422 * 1000,
   y: 111.896 + 0.106554 * 15000,
 };
+const DESKTOP_EXPLORE_CUE_MAP_POSITION = {
+  x: 182.423 + 0.106422 * 1500,
+  y: 111.896 + 0.106554 * 14450,
+};
 const LABEL_TOGGLE_MAP_POSITION = {
   x: 182.423 + 0.106422 * 15000,
   y: 111.896 + 0.106554 * 1000,
@@ -505,6 +509,8 @@ export function PortalMap() {
                 ? ({
                     "--explore-cue-left": `${view.x + view.s * EXPLORE_CUE_MAP_POSITION.x}px`,
                     "--explore-cue-top": `${view.y + view.s * EXPLORE_CUE_MAP_POSITION.y}px`,
+                    "--explore-cue-desktop-left": `${view.x + view.s * DESKTOP_EXPLORE_CUE_MAP_POSITION.x}px`,
+                    "--explore-cue-desktop-top": `${view.y + view.s * DESKTOP_EXPLORE_CUE_MAP_POSITION.y}px`,
                     "--explore-cue-scale": vpRef.current
                       ? view.s /
                         fitView(

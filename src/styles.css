@@ -78,9 +78,10 @@
 
 .explore-cue__acorn {
   flex: 0 0 auto;
-  font-size: 27px;
-  line-height: 1;
-  animation: acorn-float 2.4s ease-in-out infinite;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  mix-blend-mode: lighten;
 }
 
 .explore-cue__copy {
@@ -190,7 +191,9 @@
     right: auto;
     left: var(--explore-cue-left, 50%);
     top: var(--explore-cue-top, 50%);
-    width: max-content;
+    display: block;
+    width: 48px;
+    height: 48px;
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -201,11 +204,14 @@
   }
 
   .explore-cue__copy {
-    position: relative;
+    position: absolute;
+    top: 42%;
+    left: 54%;
     display: block;
     width: 210px;
     min-height: 30px;
     font-size: 11px;
+    pointer-events: none;
   }
 
   .explore-cue__copy strong,

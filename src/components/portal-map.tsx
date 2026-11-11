@@ -509,7 +509,13 @@ export function PortalMap() {
                 : undefined
             }
           >
-            <span className="explore-cue__acorn" aria-hidden="true">🌰</span>
+            <img
+              className="explore-cue__acorn"
+              src="/guide-character.webp"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+            />
             <span className="explore-cue__copy">
               <strong data-active={cueMessage === 0}>マップを探索</strong>
               <span data-active={cueMessage === 1}>ドラッグで移動</span>

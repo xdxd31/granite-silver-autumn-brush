@@ -434,7 +434,7 @@ function Warp({ portal, scale }: { portal: Portal; scale: number }) {
   const sw = 4.55 / scale;
   const dash = 22 / scale;
   const gap = 78 / scale;
-  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.49;
+  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.588;
 
   return (
     <g key={portal.id}>

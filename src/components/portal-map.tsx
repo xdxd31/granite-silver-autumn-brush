@@ -420,6 +420,15 @@ export function PortalMap() {
             {active ? <Warp portal={active} scale={s} /> : null}
           </svg>
         </div>
+        <aside className="explore-cue" aria-hidden="true">
+          <span className="explore-cue__acorn">🌰</span>
+          <span className="explore-cue__copy">
+            <strong>マップを探索</strong>
+            <span>ドラッグで移動</span>
+            <span>スクロール / ピンチで拡大</span>
+            <span>ポータルをタップ / ホバー</span>
+          </span>
+        </aside>
         <p className="sr-only" aria-live="polite">
           {active ? `ポータル ${active.id}。入口から出口へつながっています。` : ""}
         </p>

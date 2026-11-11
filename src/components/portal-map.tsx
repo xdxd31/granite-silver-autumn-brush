@@ -3,7 +3,10 @@ import { MAP_SIZE, PORTALS, PORTAL_ENDS, type Portal, type Pt } from "@/lib/port
 
 const MAX_SCALE = 8;
 const HIT = 22;
-const EXPLORE_CUE_MAP_POSITION = { x: 1000 / 8, y: 15000 / 8 };
+const EXPLORE_CUE_MAP_POSITION = {
+  x: 182.423 + 0.106422 * 1000,
+  y: 111.896 + 0.106554 * 15000,
+};
 
 type View = { x: number; y: number; s: number };
 

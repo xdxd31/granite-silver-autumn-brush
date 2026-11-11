@@ -136,13 +136,18 @@
   }
 
   .explore-cue__copy {
-    gap: 5px;
+    position: relative;
+    display: block;
+    width: 210px;
+    min-height: 30px;
     font-size: 11px;
   }
 
   .explore-cue__copy strong,
   .explore-cue__copy > span {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 0;
     width: max-content;
     max-width: 190px;
     padding: 5px 8px;
@@ -154,20 +159,27 @@
     font-size: 11px;
     line-height: 1.25;
     white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(8px, -50%) scale(0.96);
+    transform-origin: left center;
+    transition: opacity 350ms ease, transform 350ms ease, visibility 0s linear 350ms;
+  }
+
+    white-space: nowrap;
+  }
+
+  .explore-cue__copy > [data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%) scale(1);
+    transition-delay: 0s;
   }
 
   .explore-cue__copy strong {
-    margin: 0 0 0 10px;
+    margin: 0;
     color: #ffd66b;
     font-weight: 800;
-  }
-
-  .explore-cue__copy > span:nth-of-type(2) {
-    margin-left: 8px;
-  }
-
-  .explore-cue__copy > span:nth-of-type(3) {
-    margin-left: 16px;
   }
 
   .explore-cue__copy strong::before,

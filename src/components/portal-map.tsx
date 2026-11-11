@@ -431,20 +431,20 @@ export function PortalMap() {
 function Warp({ portal, scale }: { portal: Portal; scale: number }) {
   const c = arcControl(portal.from, portal.to);
   const d = pathD(portal.from, c, portal.to);
-  const sw = 6.5 / scale;
+  const sw = 4.55 / scale;
   const dash = 22 / scale;
   const gap = 78 / scale;
-  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.7;
+  const bs = Math.min(3.2, Math.max(0.55, 1.15 / scale)) * 0.49;
 
   return (
     <g key={portal.id}>
-      <path d={d} fill="none" stroke="#041018" strokeWidth={sw + 8 / scale} strokeLinecap="round" opacity={0.72} />
+      <path d={d} fill="none" stroke="#041018" strokeWidth={sw + 5.6 / scale} strokeLinecap="round" opacity={0.72} />
       <path
         className="motion"
         d={d}
         fill="none"
         stroke="url(#warp)"
-        strokeWidth={sw + 10 / scale}
+        strokeWidth={sw + 7 / scale}
         strokeLinecap="round"
         opacity={0.45}
         filter="url(#warp-glow)"
@@ -538,10 +538,10 @@ function Balloon({
         points={`${ex + nx * spread},${ey + ny * spread} 0,0 ${ex - nx * spread},${ey - ny * spread}`}
       />
       <rect x={o.x - w / 2} y={o.y - h / 2} width={w} height={h} rx={14} strokeWidth={2.6} />
-      <text className="bubble-num" x={o.x} y={o.y - 7} fontSize={20} textAnchor="middle" dominantBaseline="middle">
+      <text className="bubble-num" x={o.x} y={o.y - 7} fontSize={12} textAnchor="middle" dominantBaseline="middle">
         {id}
       </text>
-      <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={8} textAnchor="middle" dominantBaseline="middle">
+      <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={12} textAnchor="middle" dominantBaseline="middle">
         X:{portal.gameX} Y:{portal.gameY}
       </text>
     </g>

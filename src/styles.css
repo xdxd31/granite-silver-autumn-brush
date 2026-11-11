@@ -195,6 +195,18 @@
   }
 }
 
+@media (max-width: 767px) {
+  .explore-cue {
+    transition: opacity 220ms ease;
+  }
+
+  .explore-cue[data-map-modified="true"] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 0s linear 220ms;
+  }
+}
+
 .world {
   position: absolute;
   top: 0;

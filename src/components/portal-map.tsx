@@ -394,6 +394,7 @@ export function PortalMap() {
           }
         >
           <img src="/map.png" alt="どんぐリアドベンチャーのマップ" draggable={false} />
+          <div className="title-sweep" aria-hidden="true" />
           <svg viewBox={`0 0 ${MAP_SIZE} ${MAP_SIZE}`} aria-hidden="true">
             <defs>
               <filter id="warp-glow" x="-30%" y="-30%" width="160%" height="160%">

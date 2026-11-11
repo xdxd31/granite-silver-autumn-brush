@@ -479,6 +479,7 @@ export function PortalMap() {
               ? ({
                   "--map-label-toggle-left": `${view.x + view.s * LABEL_TOGGLE_MAP_POSITION.x}px`,
                   "--map-label-toggle-top": `${view.y + view.s * LABEL_TOGGLE_MAP_POSITION.y}px`,
+                  "--map-label-toggle-mobile-top": `${Math.max(12, view.y - 52)}px`,
                 } as CSSProperties)
               : undefined
           }

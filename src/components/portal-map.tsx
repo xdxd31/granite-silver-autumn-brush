@@ -131,6 +131,7 @@ export function PortalMap() {
   const [hoverId, setHoverId] = useState<number | null>(null);
   const [pinnedId, setPinnedId] = useState<number | null>(null);
   const [cueMessage, setCueMessage] = useState<number | null>(null);
+  const [mapModified, setMapModified] = useState(false);
   const viewRef = useRef<View | null>(null);
   const userMoved = useRef(false);
   const animOn = useRef(false);
@@ -182,10 +183,10 @@ export function PortalMap() {
   function commit(next: View, animate: boolean) {
     const { w, h } = viewportSize();
     const fit = fitView(w, h);
-    const resolved =
-      next.s <= fit.s * 1.02
-        ? ((userMoved.current = false), fit)
-        : ((userMoved.current = true), clampView(next, w, h));
+    const isAtInitialScale = next.s <= fit.s * 1.02;
+    const resolved = isAtInitialScale ? fit : clampView(next, w, h);
+    userMoved.current = !isAtInitialScale;
+    setMapModified(!isAtInitialScale);
     viewRef.current = resolved;
     setAnimated(animate);
     setView((cur) => (cur && sameView(cur, resolved) ? cur : resolved));
@@ -344,7 +345,10 @@ export function PortalMap() {
         const v = viewRef.current;
         const { w, h } = viewportSize();
         const next = clampView({ x: v.x + dx, y: v.y + dy, s: v.s }, w, h);
-        if (next.s > fitView(w, h).s * 1.02) userMoved.current = true;
+        if (next.s > fitView(w, h).s * 1.02) {
+          userMoved.current = true;
+          setMapModified(true);
+        }
         viewRef.current = next;
         setAnimated(false);
         setView((cur) => (cur && sameView(cur, next) ? cur : next));
@@ -454,6 +458,7 @@ export function PortalMap() {
         </div>
         <aside
           className="explore-cue"
+          data-map-modified={mapModified}
           aria-hidden="true"
           style={
             view

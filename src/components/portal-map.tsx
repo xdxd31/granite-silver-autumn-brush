@@ -512,7 +512,7 @@ function Balloon({
 }) {
   const o = bubbleOffset(portal, other);
   const digits = String(id).length;
-  const w = digits >= 3 ? 108 : digits === 2 ? 100 : 92;
+  const w = 132;
   const h = 42;
   const absx = w / 2 - 1;
   const absy = h / 2 - 1;
@@ -541,7 +541,7 @@ function Balloon({
       <text className="bubble-num" x={o.x} y={o.y - 7} fontSize={12} textAnchor="middle" dominantBaseline="middle">
         {id}
       </text>
-      <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={12} textAnchor="middle" dominantBaseline="middle">
+      <text className="bubble-kicker" x={o.x} y={o.y + 11} fontSize={10} textAnchor="middle" dominantBaseline="middle">
         X:{portal.gameX} Y:{portal.gameY}
       </text>
     </g>

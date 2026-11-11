@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { MAP_SIZE, PORTALS, PORTAL_ENDS, type Portal, type Pt } from "@/lib/portals";
 
 const MAX_SCALE = 8;
@@ -142,12 +142,12 @@ export function PortalMap() {
   viewRef.current = view;
 
   useEffect(() => {
-    setCueMessage(Math.floor(Math.random() * 4));
     let timer = 0;
     const scheduleNextMessage = () => {
       timer = window.setTimeout(() => {
         setCueMessage((current) => {
-          const previous = current ?? 0;
+          if (current == null) return Math.floor(Math.random() * 4);
+          const previous = current;
           const next = Math.floor(Math.random() * 3);
           return next >= previous ? next + 1 : next;
         });
@@ -447,10 +447,10 @@ export function PortalMap() {
           aria-hidden="true"
           style={
             view
-              ? {
-                  left: view.x + view.s * EXPLORE_CUE_MAP_POSITION.x,
-                  top: view.y + view.s * EXPLORE_CUE_MAP_POSITION.y,
-                }
+              ? ({
+                  "--explore-cue-left": `${view.x + view.s * EXPLORE_CUE_MAP_POSITION.x}px`,
+                  "--explore-cue-top": `${view.y + view.s * EXPLORE_CUE_MAP_POSITION.y}px`,
+                } as CSSProperties)
               : undefined
           }
         >

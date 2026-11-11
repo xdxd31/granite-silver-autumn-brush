@@ -97,6 +97,64 @@
   font-weight: 800;
 }
 
+.map-label-toggle {
+  position: absolute;
+  z-index: 5;
+  top: 12px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: 1px solid rgb(151 211 238 / 38%);
+  border-radius: 999px;
+  background: rgb(7 16 24 / 90%);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 28%);
+  color: var(--color-paper);
+  font-family: var(--font-round);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.map-label-toggle:focus-visible {
+  outline: 2px solid #ffd66b;
+  outline-offset: 2px;
+}
+
+.map-label-toggle__track {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 19px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #596775;
+  transition: background-color 180ms ease;
+}
+
+.map-label-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 35%);
+  transition: transform 180ms ease;
+}
+
+.map-label-toggle[data-on="true"] .map-label-toggle__track {
+  background: #168ccc;
+}
+
+.map-label-toggle[data-on="true"] .map-label-toggle__thumb {
+  transform: translateX(15px);
+}
+
 @keyframes acorn-float {
   0%, 100% { transform: translateY(0) rotate(-7deg); }
   50% { transform: translateY(-4px) rotate(7deg); }
@@ -120,9 +178,15 @@
   }
 }
 
-
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .map-label-toggle {
+    top: var(--map-label-toggle-top, 50%);
+    left: var(--map-label-toggle-left, 50%);
+    transform: translate(-100%, -50%);
+  }
+
   .explore-cue {
+    top: auto;
     right: auto;
     left: var(--explore-cue-left, 50%);
     top: var(--explore-cue-top, 50%);
@@ -195,12 +259,26 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
   .explore-cue {
     transition: opacity 220ms ease;
   }
 
   .explore-cue[data-map-modified="true"] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 0s linear 220ms;
+  }
+
+  .map-label-toggle {
+    top: var(--map-label-toggle-top, 12px);
+    right: 12px;
+    left: auto;
+    transform: none;
+    transition: opacity 220ms ease;
+  }
+
+  .map-label-toggle[data-map-modified="true"] {
     opacity: 0;
     visibility: hidden;
     transition: opacity 220ms ease, visibility 0s linear 220ms;

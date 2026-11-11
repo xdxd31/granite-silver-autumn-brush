@@ -166,9 +166,6 @@
     transition: opacity 350ms ease, transform 350ms ease, visibility 0s linear 350ms;
   }
 
-    white-space: nowrap;
-  }
-
   .explore-cue__copy > [data-active="true"] {
     opacity: 1;
     visibility: visible;

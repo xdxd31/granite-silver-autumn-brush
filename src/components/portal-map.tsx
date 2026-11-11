@@ -3,6 +3,7 @@ import { MAP_SIZE, PORTALS, PORTAL_ENDS, type Portal, type Pt } from "@/lib/port
 
 const MAX_SCALE = 8;
 const HIT = 22;
+const EXPLORE_CUE_MAP_POSITION = { x: 1000 / 8, y: 15000 / 8 };
 
 type View = { x: number; y: number; s: number };
 
@@ -420,7 +421,18 @@ export function PortalMap() {
             {active ? <Warp portal={active} scale={s} /> : null}
           </svg>
         </div>
-        <aside className="explore-cue" aria-hidden="true">
+        <aside
+          className="explore-cue"
+          aria-hidden="true"
+          style={
+            view
+              ? {
+                  left: view.x + view.s * EXPLORE_CUE_MAP_POSITION.x,
+                  top: view.y + view.s * EXPLORE_CUE_MAP_POSITION.y,
+                }
+              : undefined
+          }
+        >
           <span className="explore-cue__acorn">🌰</span>
           <span className="explore-cue__copy">
             <strong>マップを探索</strong>

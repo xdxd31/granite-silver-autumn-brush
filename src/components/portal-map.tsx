@@ -142,20 +142,30 @@ export function PortalMap() {
   viewRef.current = view;
 
   useEffect(() => {
-    let timer = 0;
-    const scheduleNextMessage = () => {
-      timer = window.setTimeout(() => {
-        setCueMessage((current) => {
-          if (current == null) return Math.floor(Math.random() * 4);
-          const previous = current;
-          const next = Math.floor(Math.random() * 3);
-          return next >= previous ? next + 1 : next;
-        });
-        scheduleNextMessage();
-      }, 20_000 + Math.random() * 20_000);
+    let firstMessageTimer = 0;
+    let visibleTimer = 0;
+    let nextMessageTimer = 0;
+    const scheduleRandomMessage = (delay: number) => {
+      nextMessageTimer = window.setTimeout(() => {
+        setCueMessage(1 + Math.floor(Math.random() * 3));
+        visibleTimer = window.setTimeout(() => {
+          setCueMessage(null);
+          scheduleRandomMessage(15_000);
+        }, 5_000);
+      }, delay);
     };
-    scheduleNextMessage();
-    return () => window.clearTimeout(timer);
+    firstMessageTimer = window.setTimeout(() => {
+      setCueMessage(0);
+      visibleTimer = window.setTimeout(() => {
+        setCueMessage(null);
+        scheduleRandomMessage(20_000);
+      }, 5_000);
+    }, 3_000);
+    return () => {
+      window.clearTimeout(firstMessageTimer);
+      window.clearTimeout(visibleTimer);
+      window.clearTimeout(nextMessageTimer);
+    };
   }, []);
 
   function setAnimated(on: boolean) {

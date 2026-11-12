@@ -240,7 +240,7 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transform: translate(8px, -50%) scale(0.96);
+    transform: translate(8px, -50%) scale(var(--explore-cue-scale, 1));
     transform-origin: left center;
     transition: opacity 350ms ease, transform 350ms ease, visibility 0s linear 350ms;
     isolation: isolate;
@@ -249,7 +249,7 @@
   .explore-cue__copy > [data-active="true"] {
     opacity: 1;
     visibility: visible;
-    transform: translate(0, -50%) scale(1);
+    transform: translate(0, -50%) scale(var(--explore-cue-scale, 1));
     transition-delay: 0s;
   }
 

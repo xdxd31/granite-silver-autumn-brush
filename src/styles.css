@@ -310,6 +310,12 @@
   }
 }
 
+@media (orientation: portrait) and (max-width: 767px), (orientation: portrait) and (hover: none) and (pointer: coarse) {
+  .explore-cue {
+    bottom: max(12px, calc((100dvh - 100vw) / 2 - 48px));
+  }
+}
+
 @media (orientation: landscape) and (max-width: 767px), (orientation: landscape) and (hover: none) and (pointer: coarse) {
   .explore-cue {
     width: clamp(190px, calc((100vw - 100dvh) / 2 - 24px), 350px);

@@ -258,7 +258,7 @@ export function PortalMap() {
     let nextMessageTimer = 0;
     const scheduleRandomMessage = (delay: number) => {
       nextMessageTimer = window.setTimeout(() => {
-        setCueMessage(1 + Math.floor(Math.random() * 3));
+        setCueMessage(1 + Math.floor(Math.random() * 4));
         visibleTimer = window.setTimeout(() => {
           setCueMessage(null);
           scheduleRandomMessage(15_000);
@@ -534,6 +534,7 @@ export function PortalMap() {
               <span data-active={cueMessage === 1}>ドラッグで移動</span>
               <span data-active={cueMessage === 2}>スクロール / ピンチで拡大</span>
               <span data-active={cueMessage === 3}>ポータルをタップ / ホバー</span>
+              <span data-active={cueMessage === 4}>緑：ダンジョン、ピンク：町、紫：その他</span>
             </span>
           </aside>
         ) : null}

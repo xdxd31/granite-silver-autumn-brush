@@ -534,7 +534,7 @@ export function PortalMap() {
               <span data-active={cueMessage === 1}>ドラッグで移動</span>
               <span data-active={cueMessage === 2}>スクロール / ピンチで拡大</span>
               <span data-active={cueMessage === 3}>ポータルをタップ / ホバー</span>
-              <span data-active={cueMessage === 4}>緑：ダンジョン、ピンク：町、紫：その他</span>
+              <span data-active={cueMessage === 4}><span className="guide-color--pink">ピンク</span>：町、<span className="guide-color--green">緑</span>：ダンジョン</span>
             </span>
           </aside>
         ) : null}

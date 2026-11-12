@@ -228,7 +228,7 @@
     top: 50%;
     left: 0;
     width: max-content;
-    max-width: 190px;
+    max-width: none;
     padding: 5px 8px;
     border: 1px solid rgb(151 211 238 / 38%);
     border-radius: 9px;
@@ -358,6 +358,14 @@
 .bubble-num {
   font-family: var(--font-round);
   stroke: none;
+}
+
+.guide-color--pink {
+  color: #ff72c6;
+}
+
+.guide-color--green {
+  color: #50d987;
 }
 
 .bubble-kicker {

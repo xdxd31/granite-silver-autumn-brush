@@ -276,17 +276,30 @@
 
 @media (max-width: 767px), (hover: none) and (pointer: coarse) {
   .explore-cue {
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     width: min(350px, calc(100vw - 24px));
-    padding: 9px 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
     transition: opacity 220ms ease;
   }
 
   .explore-cue__copy {
-    flex: 1 1 0;
+    box-sizing: border-box;
+    flex: 0 0 auto;
     min-width: 0;
+    width: 100%;
     gap: 3px;
+    padding: 9px 12px;
+    border: 1px solid rgb(151 211 238 / 38%);
+    border-radius: 14px;
+    background: rgb(7 16 24 / 90%);
+    box-shadow: 0 3px 10px rgb(0 0 0 / 24%);
+    overflow-wrap: anywhere;
   }
 
   .explore-cue[data-map-modified="true"] {
